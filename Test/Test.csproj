@@ -106,6 +106,7 @@
     <Compile Include="Assets\work\PLControl\PlaneUp.cs" />
     <Compile Include="Assets\work\PLControl\siG.cs" />
     <Compile Include="Assets\work\PlanetCountTxt.cs" />
+    <Compile Include="Assets\work\Shadow\HitShadow.cs" />
     <Compile Include="Assets\work\Shadow\PlayerController.cs" />
     <Compile Include="Assets\work\Shadow\RockOn.cs" />
     <Compile Include="Assets\work\Shadow\ShadowPlayer.cs" />

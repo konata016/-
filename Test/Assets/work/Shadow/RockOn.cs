@@ -2,26 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RockOn : MonoBehaviour {
+public class RockOn : MonoBehaviour
+{
 
     Plane plane = new Plane();
     float distance = 0;
 
     void Update()
     {
-        // カメラとマウスの位置を元にRayを準備
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        // プレイヤーの高さにPlaneを更新して、カメラの情報を元に地面判定して距離を取得
-        plane.SetNormalAndPosition(new Vector3(0, 0, 1), transform.localPosition);
-        if (plane.Raycast(ray, out distance))
-        {
+        var pos = Camera.main.WorldToScreenPoint(transform.localPosition);
+        var rotation = Quaternion.LookRotation(Vector3.forward, Input.mousePosition - pos);
+        transform.localRotation = rotation;
 
-            // 距離を元に交点を算出して、交点の方を向く
-            var lookPoint = ray.GetPoint(distance);
-            transform.LookAt(lookPoint);
-        }
-
-       
     }
 }
