@@ -6,17 +6,22 @@ public class PlayerController : MonoBehaviour
 {
 
     public float speed = 3f;
-
+    public Rigidbody rb;
     public float JumpPower;             //ジャンプ力
+    bool OnObject;
+
+    bool direction;
+    bool save;
+    bool inertia;
+
     //接地判定
     public bool OnGround { get; set; }  //追記
-
-    public Rigidbody rb;
 
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        direction = true;
     }
 
     // Update is called once per frame
@@ -25,21 +30,64 @@ public class PlayerController : MonoBehaviour
         //動き
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * speed);
+            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+            {
+            }
+            else
+            {
+                if (OnObject)
+                {
+                    transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * speed);
+                }
+                else
+                {
+                    inertia = true;
+                }
+            }
         }
+
         //回転
         if (Input.GetKey(KeyCode.A))
         {
             transform.rotation = Quaternion.LookRotation(transform.position +
                 (new Vector3(1, 0, 0) * Input.GetAxisRaw("Horizontal")) -
                 transform.position);
+            //方向のフラグ
+            direction = false;
         }
         if (Input.GetKey(KeyCode.D))
         {
             transform.rotation = Quaternion.LookRotation(transform.position +
                 (new Vector3(1, 0, 0) * Input.GetAxisRaw("Horizontal")) -
                 transform.position);
+            //方向のフラグ
+            direction = true;
         }
+
+        //慣性の管理
+        if (OnObject)
+        {
+            save = direction;
+            inertia = false;
+        }
+        if (inertia)
+        {
+            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+            {
+            }
+            else
+            {
+                if (save == direction)
+                {
+                    transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * speed);
+                }
+                else
+                {
+                    transform.Translate(new Vector3(0, 0, -1) * Time.deltaTime * speed / 2);
+                }
+            }
+        }
+
 
         //変更
         if (rb.useGravity == true)
@@ -77,6 +125,8 @@ public class PlayerController : MonoBehaviour
             rb.useGravity = false;
             rb.velocity = Vector3.zero;
         }
+
+        OnObject = true;
     }
     void OnTriggerExit(Collider other)
     {
@@ -84,5 +134,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.useGravity = true;
         }
+
+        OnObject = false;
     }
 }
