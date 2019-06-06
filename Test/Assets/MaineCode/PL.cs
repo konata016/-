@@ -6,7 +6,7 @@ public class PL : MonoBehaviour {
 
     public float speed = 300f;
 
-    public PLJump JumpScript;
+    //public PLJump JumpScript;
     public float jump_power = 100f;
 
     public Rigidbody rb;
@@ -19,12 +19,12 @@ public class PL : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-	float jamp_fg=JumpScript.getJudge() ?  1.0f : 0.5f;
+	//float jamp_fg=JumpScript.getJudge() ?  1.0f : 0.5f;
 
         //Walk
         if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * speed * jamp_fg ); //ê≥ñ 
+            transform.Translate(Vector3.forward * Time.deltaTime * speed ); //ê≥ñ 
         }
 
         //Direction of Caracter's face
@@ -50,7 +50,7 @@ public class PL : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.Space))
         {
-            if (JumpScript.getJudge() == true)
+            if (IsGround.IsReady)
             {
                 //rb.AddForce(0, jump_power * Time.deltaTime, 0);
                 // velocity.y += jump_power;

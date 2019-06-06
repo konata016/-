@@ -30,19 +30,22 @@ public class PlayerController : MonoBehaviour
         //動き
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+            //if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+            //{
+            //}
+            //else
+            //{
+            //    //
+            //}
+
+            if (OnObject)
             {
+                transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * speed);
+
             }
             else
             {
-                if (OnObject)
-                {
-                    transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * speed);
-                }
-                else
-                {
-                    inertia = true;
-                }
+                inertia = true;
             }
         }
 
